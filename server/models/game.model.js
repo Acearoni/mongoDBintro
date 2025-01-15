@@ -1,8 +1,10 @@
 const mongoose = require('mongoose'); //importing Mongoose Library
 
+
+//This is a blueprint of how our data should look.
 const GameSchema = mongoose.Schema({ //mongoose.Schema() is a function, then add the {} into it, passing in an object.
     gameName: String,
-    title: String,
+    dev: String,
     releaseYear: Number,
     genre: String
 
