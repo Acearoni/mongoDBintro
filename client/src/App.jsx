@@ -3,6 +3,8 @@ import './App.css'
 import DisplayAll from './components/DisplayAll'
 import { Link, Routes, Route } from 'react-router-dom'
 import CreateForm from './components/CreateForm'
+import DisplayOne from './components/DisplayOne'
+import Edit from './components/Edit'
 
 function App() {
   const [gameList, setGameList] = useState([])
@@ -18,6 +20,8 @@ function App() {
       <Routes>
         <Route index element={<DisplayAll gameList={gameList} setGameList={setGameList} />} />
         <Route path="/newGame" element={<CreateForm/>} />
+        <Route path='/game/:id' element={<DisplayOne/>}/>
+        <Route path='/edit/:id' element={<Edit/>}/>
       </Routes>
     </>
   )

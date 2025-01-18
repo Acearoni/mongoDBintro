@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
+
 
 const DisplayAll = (props) => {
-    const {gameList, setGameList} = props
+    const { gameList, setGameList } = props
     useEffect(() => {
         axios.get('http://localhost:8000/api/allGames')
             .then((response) => {
@@ -23,8 +26,10 @@ const DisplayAll = (props) => {
                         <h2>Developer:  {game.dev}</h2>
                         <h2>Release Year:  {game.releaseYear}</h2>
                         <h2>Genre:  {game.genre}</h2>
-                        <button>Edit</button>
-                        <button>Details</button>
+                        <Link to={`/edit/${game._id}`} >Edit</Link>
+                        <br />
+                        <br />
+                        <Link to={`/game/${game._id}`}>Details</Link>
                     </div>
                 ))
             }
