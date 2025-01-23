@@ -14,7 +14,7 @@ const CreateForm = (props) => {
         const newGame = {gameName, dev, releaseYear, genre}
         axios.post('http://localhost:8000/api/createGame', newGame)
             .then((res) => {
-                console.log(res);
+                // console.log(res);
                 navigate('/')
             })
             .catch((err) => {

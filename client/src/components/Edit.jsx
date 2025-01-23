@@ -2,6 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+//array of objects
+const options = [
+    {value: 'Third Person Shooter'},
+    {value: 'First Person Shooter'},
+    {value: 'Platformer'},
+    {value: 'Puzzle'}
+]
 
 const Edit = (props) => {
     const navigate = useNavigate();
@@ -11,10 +18,12 @@ const Edit = (props) => {
     const [releaseYear, setReleaseYear] = useState(1960);
     const [genre, setGenre] = useState("Third Person Shooter");
     const [errors, setErrors] = useState({});
+    const [dropdown, setDropdown] = useState([]);
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/findOneGame/${id}`)
             .then((res) => {
+                generateDropdown(res.data.genre)
                 setGameName(res.data.gameName)
                 setDev(res.data.dev)
                 setReleaseYear(res.data.releaseYear)
@@ -37,6 +46,19 @@ const Edit = (props) => {
                 console.log(err)
             })
         }
+
+    //Did this to autofill the options while editing a game to prepopulate the correct field. 
+    const generateDropdown = (genre) => {
+        const optionTags = options.map((option) => {
+            if(option.value == genre){
+                return <option value={option.value} selected>{option.value}</option>
+            }
+            else{
+                return <option value={option.value}>{option.value}</option>
+            }
+        })
+        setDropdown(optionTags)
+    }
 
     return (
         <div>
@@ -65,10 +87,11 @@ const Edit = (props) => {
                 }
                 <label>Genre:</label>
                 <select onChange={(e) => setGenre(e.target.value)}>
-                    <option value="Third Person Shooter">Third Person Shooter</option>
-                    <option value="First Person Shooter">First Person Shooter</option>
-                    <option value="Platformer">Platformer</option>
-                    <option value="Puzzle">Puzzle</option>
+                    {
+                        dropdown.map((option) => (
+                            option
+                        ))
+                    }
                 </select>
                 {
                     errors.genre ?
