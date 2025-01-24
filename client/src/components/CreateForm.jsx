@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
+import GameForm from './GameForm';
 
 const CreateForm = (props) => {
     const navigate = useNavigate();
@@ -9,6 +10,7 @@ const CreateForm = (props) => {
     const [releaseYear, setReleaseYear] = useState(1960);
     const [genre, setGenre] = useState("Third Person Shooter");
     const [errors, setErrors] = useState({});
+
     const submitHandler = (e) => {
         e.preventDefault()
         const newGame = {gameName, dev, releaseYear, genre}
@@ -27,44 +29,18 @@ const CreateForm = (props) => {
 
     return (
         <div>
-            <h2>Add To Our Collection</h2>
-            <form onSubmit={submitHandler}>
-                <label>Game Name:</label>
-                <input type="text" onChange={(e) => setGameName(e.target.value)} value={gameName}/>
-                {
-                    errors.gameName?
-                    <p>{errors.gameName.message}</p>:
-                    null
-                }
-                <label>Developer:</label>
-                <input type="text" onChange={(e) => setDev(e.target.value)} value={dev}/>
-                {
-                    errors.dev?
-                    <p>{errors.dev.message}</p>:
-                    null
-                }
-                <label>Release Year:</label>
-                <input type="number" onChange={(e) => setReleaseYear(e.target.value)} value={releaseYear}/>
-                {
-                    errors.releaseYear?
-                    <p>{errors.releaseYear.message}</p>:
-                    null
-                }
-                <label>Genre:</label>
-                <select onChange={(e) => setGenre(e.target.value)}>
-                    <option value="Third Person Shooter">Third Person Shooter</option>
-                    <option value="First Person Shooter">First Person Shooter</option>
-                    <option value="Platformer">Platformer</option>
-                    <option value="Puzzle">Puzzle</option>
-                </select>
-                {
-                    errors.genre?
-                    <p>{errors.genre.message}</p>:
-                    null     
-                }
-                <button>Submit</button>
-
-            </form>
+            <GameForm
+            submitHandler={submitHandler}
+            gameName={gameName}
+            setGameName={setGameName}
+            dev={dev}
+            setDev={setDev}
+            releaseYear={releaseYear}
+            setReleaseYear={setReleaseYear}
+            genre={genre}
+            setGenre={setGenre}
+            errors={errors}
+            />
         </div>
     );
 }
