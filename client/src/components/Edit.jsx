@@ -14,30 +14,28 @@ const options = [
 const Edit = (props) => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const [gameName, setGameName] = useState("");
-    const [dev, setDev] = useState("");
-    const [releaseYear, setReleaseYear] = useState(1960);
-    const [genre, setGenre] = useState("Third Person Shooter");
+    const [game, setGame] = useState({
+        gameName: "",
+        dev: "",
+        releaseYear: 1960,
+        genre: "Third Person Shooter",
+    });
     const [errors, setErrors] = useState({});
 
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/findOneGame/${id}`)
             .then((res) => {
-                setGameName(res.data.gameName)
-                setDev(res.data.dev)
-                setReleaseYear(res.data.releaseYear)
-                setGenre(res.data.genre)
+                setGame(res.data)
             })
             .catch((err) => {
                 console.log(err)
             })
-    }, [])
+    }, [id])
 
     const submitHandler = (e) => {
         e.preventDefault();
-        const newGame = { gameName, dev, releaseYear, genre }
-        axios.put(`http://localhost:8000/api/updateGame/${id}`, newGame)
+        axios.put(`http://localhost:8000/api/updateGame/${id}`, game)
             .then(() => {
                 navigate('/')
             })
@@ -52,14 +50,8 @@ const Edit = (props) => {
         <div>
             <GameForm
                 submitHandler={submitHandler}
-                gameName={gameName}
-                setGameName={setGameName}
-                dev={dev}
-                setDev={setDev}
-                releaseYear={releaseYear}
-                setReleaseYear={setReleaseYear}
-                genre={genre}
-                setGenre={setGenre}
+                game={game}
+                setGame={setGame}
                 errors={errors}
             />
         </div>

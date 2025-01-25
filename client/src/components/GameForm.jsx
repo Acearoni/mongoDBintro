@@ -10,12 +10,12 @@ const options = [
 ]
 
 const GameForm = (props) => {
-    const {submitHandler, gameName, setGameName, dev, setDev, releaseYear, setReleaseYear, genre, setGenre, errors} = props;
+    const {submitHandler, game, setGame, errors} = props;
     const [dropdown, setDropdown] = useState([])
 
     useEffect(()=>{
-        generateDropdown(genre)
-    }, [])
+        generateDropdown(game.genre)
+    }, [game.genre])
 
     //Did this to autofill the options while editing a game to prepopulate the correct field. 
     const generateDropdown = (genre) => {
@@ -36,28 +36,28 @@ const GameForm = (props) => {
             <h2>Add To Our Collection</h2>
             <form onSubmit={submitHandler}>
                 <label>Game Name:</label>
-                <input type="text" onChange={(e) => setGameName(e.target.value)} value={gameName} />
+                <input type="text" onChange={(e) => setGame({...game, gameName:e.target.value})} value={game.gameName} />
                 {
                     errors.gameName ?
                         <p>{errors.gameName.message}</p> :
                         null
                 }
                 <label>Developer:</label>
-                <input type="text" onChange={(e) => setDev(e.target.value)} value={dev} />
+                <input type="text" onChange={(e) => setGame({...game, dev:e.target.value})} value={game.dev} />
                 {
                     errors.dev ?
                         <p>{errors.dev.message}</p> :
                         null
                 }
                 <label>Release Year:</label>
-                <input type="number" onChange={(e) => setReleaseYear(e.target.value)} value={releaseYear} />
+                <input type="number" onChange={(e) => setGame({...game, releaseYear:e.target.value})} value={game.releaseYear} />
                 {
                     errors.releaseYear ?
                         <p>{errors.releaseYear.message}</p> :
                         null
                 }
                 <label>Genre:</label>
-                <select onChange={(e) => setGenre(e.target.value)} value={genre}>
+                <select onChange={(e) => setGame({...game, genre:e.target.value})} value={game.genre}>
                     {
                         dropdown.map((option) => (
                             option
